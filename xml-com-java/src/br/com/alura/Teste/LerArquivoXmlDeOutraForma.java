@@ -16,6 +16,9 @@ public class LerArquivoXmlDeOutraForma {
 		InputStream ips = new FileInputStream("src/vendasVideo3.xml");
 		InputSource is = new InputSource(ips);
 		leitor.parse(is);
+		
+		System.out.println(logica.produtos);
+		
 	}
 
 }
