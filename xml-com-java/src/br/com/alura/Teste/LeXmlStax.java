@@ -13,20 +13,33 @@ import javax.xml.stream.events.XMLEvent;
 
 import br.com.alura.Model.Produto;
 
-public class LeArquivoXMLTerceiraForma {
+public class LeXmlStax {
 	public static void main(String[] args) throws Exception {
 		InputStream is = new FileInputStream("src/vendas.xml");
 		XMLInputFactory factory = XMLInputFactory.newInstance();
 		XMLEventReader eventos = factory.createXMLEventReader(is);
-		Produto produto = null;
 		List<Produto> produtos = new ArrayList<>();
 		
 		while(eventos.hasNext()){
 			XMLEvent evento = eventos.nextEvent();
 			
 			if(evento.isStartElement() && evento.asStartElement().getName().getLocalPart().equals("produto")){
-				produto = new Produto();
-			}else if(evento.isStartElement() && evento.asStartElement().getName().getLocalPart().equals("nome")){
+				Produto produto = criaUmProduto(eventos);
+				produtos.add(produto);
+			}
+		
+		}
+		
+		System.out.println(produtos);
+	}
+
+	private static Produto criaUmProduto(XMLEventReader eventos) throws Exception {
+		Produto produto = new Produto();
+		
+		while(eventos.hasNext()){
+			XMLEvent evento = eventos.nextEvent();
+			
+			if(evento.isStartElement() && evento.asStartElement().getName().getLocalPart().equals("nome")){
 				evento = eventos.nextEvent();
 				String nome = evento.asCharacters().getData();
 				produto.setNome(nome);
@@ -36,12 +49,13 @@ public class LeArquivoXMLTerceiraForma {
 				double preco = Double.parseDouble(conteudoPreco);
 				produto.setPreco(preco);
 			}else if(evento.isEndElement() && evento.asEndElement().getName().getLocalPart().equals("produto")){
-				produtos.add(produto);
+				break;
 			}
-		
+		}
+			
+		return produto;
 		}
 		
-		System.out.println(produtos);
-	}
+		
 
 }

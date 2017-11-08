@@ -8,7 +8,7 @@
 	<formaDePagamento>Cartão de Crédito</formaDePagamento>
 	<produto>
 		<nome>Smart Phone</nome>
-		<preco>1.000,00</preco>
+		<preco>1000.00</preco>
 	</produto>
 </venda>
 
